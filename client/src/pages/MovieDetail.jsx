@@ -124,11 +124,12 @@ const MovieDetail = () => {
 
       {/* Hero Showcase Card */}
       <div
+        className="hero-banner"
         style={{
           position: "relative",
           borderRadius: "var(--radius-lg)",
           overflow: "hidden",
-          backgroundColor: "var(--bg-secondary)",
+          backgroundColor: "#12161f",
           border: "1px solid var(--border-color)",
           boxShadow: "var(--shadow-lg)",
           marginBottom: "2.5rem",
@@ -202,7 +203,16 @@ const MovieDetail = () => {
               </span>
             </div>
 
-            <h1 style={{ fontSize: "2.5rem", fontWeight: 800, marginBottom: "0.75rem", letterSpacing: "-0.02em" }}>
+            <h1
+              className="hero-movie-title"
+              style={{
+                fontSize: "2.5rem",
+                fontWeight: 800,
+                marginBottom: "0.75rem",
+                letterSpacing: "-0.02em",
+                color: "#ffffff",
+              }}
+            >
               {movie.title}
             </h1>
 
@@ -283,12 +293,12 @@ const MovieDetail = () => {
                 </a>
               )}
 
-              <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", color: "var(--text-secondary)", fontSize: "0.9rem" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", color: "rgba(255, 255, 255, 0.85)", fontSize: "0.9rem" }}>
                 <Clock size={16} />
                 <span>{movie.duration} mins</span>
               </div>
 
-              <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", color: "var(--text-secondary)", fontSize: "0.9rem" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", color: "rgba(255, 255, 255, 0.85)", fontSize: "0.9rem" }}>
                 <Calendar size={16} />
                 <span>{new Date(movie.releaseDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</span>
               </div>
@@ -321,12 +331,12 @@ const MovieDetail = () => {
                     key={g}
                     style={{
                       padding: "0.3rem 0.75rem",
-                      backgroundColor: "rgba(255, 255, 255, 0.08)",
+                      backgroundColor: "rgba(255, 255, 255, 0.1)",
                       borderRadius: "var(--radius-full)",
                       fontSize: "0.85rem",
                       fontWeight: 600,
-                      color: "var(--text-primary)",
-                      border: "1px solid rgba(255, 255, 255, 0.15)",
+                      color: "#ffffff",
+                      border: "1px solid rgba(255, 255, 255, 0.2)",
                     }}
                   >
                     {g}
@@ -334,13 +344,22 @@ const MovieDetail = () => {
                 ))}
               </div>
 
-              <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem" }}>
-                Available in: <strong style={{ color: "#fff" }}>{movie.language?.join(", ")}</strong>
+              <p style={{ color: "rgba(255, 255, 255, 0.85)", fontSize: "0.9rem" }}>
+                Available in: <strong style={{ color: "#ffffff" }}>{movie.language?.join(", ")}</strong>
               </p>
             </div>
 
             {/* Synopsis */}
-            <p style={{ color: "var(--text-secondary)", fontSize: "1rem", lineHeight: 1.7, marginBottom: "2rem", maxWidth: "700px" }}>
+            <p
+              className="hero-movie-desc"
+              style={{
+                color: "rgba(255, 255, 255, 0.9)",
+                fontSize: "1rem",
+                lineHeight: 1.7,
+                marginBottom: "2rem",
+                maxWidth: "700px",
+              }}
+            >
               {movie.description}
             </p>
 

@@ -40,13 +40,14 @@ const HeroBanner = ({ movies = [] }) => {
   return (
     <>
       <div
+        className="hero-banner"
         style={{
           position: "relative",
           borderRadius: "var(--radius-lg)",
           overflow: "hidden",
           minHeight: "420px",
           marginBottom: "2.5rem",
-          backgroundColor: "var(--bg-secondary)",
+          backgroundColor: "#12161f",
           boxShadow: "var(--shadow-lg)",
           border: "1px solid var(--border-color)",
         }}
@@ -114,34 +115,45 @@ const HeroBanner = ({ movies = [] }) => {
               <span>{(currentMovie.imdbRating || currentMovie.rating || 0).toFixed(1)}</span>
             </span>
             {currentMovie.imdbVotes && (
-              <span style={{ color: "var(--text-muted)", fontSize: "0.8rem", fontWeight: 500 }}>
+              <span style={{ color: "rgba(255, 255, 255, 0.7)", fontSize: "0.8rem", fontWeight: 500 }}>
                 ({currentMovie.imdbVotes} votes)
               </span>
             )}
-            <span style={{ color: "var(--text-secondary)", fontSize: "0.85rem", display: "flex", alignItems: "center", gap: "0.25rem" }}>
+            <span style={{ color: "rgba(255, 255, 255, 0.85)", fontSize: "0.85rem", display: "flex", alignItems: "center", gap: "0.25rem" }}>
               <Clock size={13} />
               <span>{currentMovie.duration} mins</span>
             </span>
-            <span style={{ color: "var(--text-muted)", fontSize: "0.85rem" }}>•</span>
-            <span style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>
+            <span style={{ color: "rgba(255, 255, 255, 0.5)", fontSize: "0.85rem" }}>•</span>
+            <span style={{ color: "rgba(255, 255, 255, 0.85)", fontSize: "0.85rem" }}>
               {currentMovie.certificate}
             </span>
           </div>
 
           {/* Title */}
-          <h2 style={{ fontSize: "2.75rem", fontWeight: 800, marginBottom: "0.75rem", lineHeight: 1.15, letterSpacing: "-0.02em" }}>
+          <h2
+            className="hero-movie-title"
+            style={{
+              fontSize: "2.75rem",
+              fontWeight: 800,
+              marginBottom: "0.75rem",
+              lineHeight: 1.15,
+              letterSpacing: "-0.02em",
+              color: "#ffffff",
+            }}
+          >
             {currentMovie.title}
           </h2>
 
           {/* Genres & Languages */}
-          <p style={{ color: "var(--accent)", fontSize: "0.95rem", fontWeight: 600, marginBottom: "0.85rem" }}>
-            {currentMovie.genre?.join(" • ")} | <span style={{ color: "var(--text-secondary)" }}>{currentMovie.language?.join(", ")}</span>
+          <p style={{ color: "#f5c518", fontSize: "0.95rem", fontWeight: 600, marginBottom: "0.85rem" }}>
+            {currentMovie.genre?.join(" • ")} | <span style={{ color: "rgba(255, 255, 255, 0.85)" }}>{currentMovie.language?.join(", ")}</span>
           </p>
 
           {/* Description */}
           <p
+            className="hero-movie-desc"
             style={{
-              color: "var(--text-secondary)",
+              color: "rgba(255, 255, 255, 0.9)",
               fontSize: "0.95rem",
               lineHeight: 1.6,
               marginBottom: "1.75rem",

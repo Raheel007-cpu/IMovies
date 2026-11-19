@@ -87,6 +87,29 @@
   color: #0f172a !important;
 }
 
+/* Hero Showcase on Home and Movie Detail pages - preserves dark cinematic canvas */
+.hero-banner {
+  background-color: #12161f !important;
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .hero-banner h1,
+[data-theme="light"] .hero-banner h2,
+[data-theme="light"] .hero-banner .hero-movie-title {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="light"] .hero-banner p,
+[data-theme="light"] .hero-banner .hero-movie-desc {
+  color: rgba(255, 255, 255, 0.92) !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="light"] .hero-banner span:not(.badge) {
+  color: rgba(255, 255, 255, 0.85);
+}
+
 [data-theme="light"] .glass-card {
   background-color: #ffffff !important;
   border-color: #e2e8f0 !important;
