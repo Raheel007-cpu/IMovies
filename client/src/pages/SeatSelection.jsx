@@ -446,12 +446,12 @@ const SeatSelection = () => {
             bottom: 0,
             left: 0,
             right: 0,
-            backgroundColor: "rgba(18, 22, 31, 0.95)",
+            backgroundColor: "var(--bg-secondary)",
             backdropFilter: "blur(12px)",
             borderTop: "1px solid var(--border-color)",
             padding: "1rem 1.5rem",
             zIndex: 50,
-            boxShadow: "0 -8px 24px rgba(0, 0, 0, 0.5)",
+            boxShadow: "var(--shadow-lg)",
           }}
         >
           <div
@@ -470,7 +470,7 @@ const SeatSelection = () => {
                 <span style={{ fontSize: "0.85rem", color: "var(--text-secondary)" }}>
                   Selected ({selectedSeats.length} seats):
                 </span>
-                <span style={{ fontWeight: 800, color: "#fff", fontSize: "0.95rem" }}>
+                <span style={{ fontWeight: 800, color: "var(--text-primary)", fontSize: "0.95rem" }}>
                   {selectedSeats.map((s) => s.seatNumber).join(", ")}
                 </span>
               </div>

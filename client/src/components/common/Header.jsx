@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Film, MapPin, User, LogIn, LogOut, ShieldCheck, ChevronDown, Ticket } from "lucide-react";
+import { Film, MapPin, User, LogIn, LogOut, ShieldCheck, ChevronDown, Ticket, Sun, Moon } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { useCity } from "../../context/CityContext";
+import { useTheme } from "../../context/ThemeContext";
 import CityModal from "./CityModal";
 
 const Header = () => {
   const { user, logout, isAdmin } = useAuth();
   const { selectedCity } = useCity();
+  const { theme, toggleTheme, isDarkMode } = useTheme();
   const [isCityModalOpen, setIsCityModalOpen] = useState(false);
 
   return (
@@ -111,6 +113,30 @@ const Header = () => {
               <MapPin size={15} color="var(--primary)" />
               <span>{selectedCity}</span>
               <ChevronDown size={14} color="var(--text-muted)" />
+            </button>
+
+            {/* Theme Mode Toggle (Light / Dark) */}
+            <button
+              onClick={toggleTheme}
+              title={`Switch to ${isDarkMode ? "Light" : "Dark"} Mode`}
+              aria-label="Toggle Light and Dark Mode"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "36px",
+                height: "36px",
+                borderRadius: "var(--radius-md)",
+                backgroundColor: "var(--bg-card)",
+                border: "1px solid var(--border-color)",
+                color: isDarkMode ? "#f5c518" : "#f59e0b",
+                cursor: "pointer",
+                transition: "transform 0.2s ease, background-color 0.2s ease",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.08)")}
+              onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+            >
+              {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
             </button>
 
             {user ? (

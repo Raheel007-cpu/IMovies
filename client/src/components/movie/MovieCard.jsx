@@ -91,7 +91,7 @@ const MovieCard = ({ movie }) => {
               fontSize: "1.1rem",
               fontWeight: 700,
               marginBottom: "0.4rem",
-              color: "#fff",
+              color: "var(--text-primary)",
               whiteSpace: "nowrap",
               overflow: "hidden",
               textOverflow: "ellipsis",

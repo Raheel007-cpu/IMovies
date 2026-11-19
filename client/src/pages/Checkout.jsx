@@ -207,7 +207,7 @@ const Checkout = () => {
           <div style={{ padding: "0.85rem", backgroundColor: "var(--bg-secondary)", borderRadius: "var(--radius-md)", marginBottom: "1.5rem" }}>
             <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.85rem", marginBottom: "0.4rem" }}>
               <span style={{ color: "var(--text-secondary)" }}>Selected Seats ({heldSeats.length}):</span>
-              <span style={{ fontWeight: 800, color: "#fff" }}>
+              <span style={{ fontWeight: 800, color: "var(--text-primary)" }}>
                 {heldSeats.map((s) => s.seatNumber).join(", ")}
               </span>
             </div>

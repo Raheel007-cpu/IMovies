@@ -90,7 +90,7 @@ const BookingSuccess = () => {
         }}
       >
         <CheckCircle2 size={44} color="var(--success)" style={{ margin: "0 auto 0.5rem" }} />
-        <h1 style={{ fontSize: "1.75rem", fontWeight: 800, color: "#fff" }}>
+        <h1 style={{ fontSize: "1.75rem", fontWeight: 800, color: "var(--text-primary)" }}>
           Booking Confirmed!
         </h1>
         <p style={{ color: "var(--text-secondary)", fontSize: "0.95rem", marginTop: "0.25rem" }}>

@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { CityProvider } from "./context/CityContext";
+import { ThemeProvider } from "./context/ThemeContext";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import Home from "./pages/Home";
@@ -21,13 +22,14 @@ import ProtectedRoute from "./components/common/ProtectedRoute";
 
 function App() {
   return (
-    <AuthProvider>
-      <CityProvider>
-        <Router>
-          <div className="app-container">
-            <Header />
-            <main className="main-content">
-              <Routes>
+    <ThemeProvider>
+      <AuthProvider>
+        <CityProvider>
+          <Router>
+            <div className="app-container">
+              <Header />
+              <main className="main-content">
+                <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/movies" element={<Movies />} />
                 <Route path="/movies/:id" element={<MovieDetail />} />
@@ -83,6 +85,7 @@ function App() {
         </Router>
       </CityProvider>
     </AuthProvider>
+  </ThemeProvider>
   );
 }
 
