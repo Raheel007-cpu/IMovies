@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Star, Play, Ticket, ChevronLeft, ChevronRight, Clock, Film, X } from "lucide-react";
+import { Star, Play, Ticket, Clock, Film, X } from "lucide-react";
 
 const HeroBanner = ({ movies = [] }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -17,14 +17,6 @@ const HeroBanner = ({ movies = [] }) => {
   if (!movies || movies.length === 0) return null;
 
   const currentMovie = movies[currentIndex] || movies[0];
-
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev === 0 ? movies.length - 1 : prev - 1));
-  };
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % movies.length);
-  };
 
   const getEmbedUrl = (url) => {
     if (!url) return null;
@@ -188,74 +180,28 @@ const HeroBanner = ({ movies = [] }) => {
           </div>
         </div>
 
-        {/* Carousel Controls */}
+        {/* Slide Indicator Dots */}
         {movies.length > 1 && (
-          <>
-            <button
-              onClick={handlePrev}
-              style={{
-                position: "absolute",
-                left: "16px",
-                top: "50%",
-                transform: "translateY(-50%)",
-                zIndex: 20,
-                backgroundColor: "rgba(10, 12, 16, 0.6)",
-                backdropFilter: "blur(6px)",
-                color: "#fff",
-                width: "40px",
-                height: "40px",
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                border: "1px solid var(--border-color)",
-                cursor: "pointer",
-              }}
-            >
-              <ChevronLeft size={22} />
-            </button>
-            <button
-              onClick={handleNext}
-              style={{
-                position: "absolute",
-                right: "16px",
-                top: "50%",
-                transform: "translateY(-50%)",
-                zIndex: 20,
-                backgroundColor: "rgba(10, 12, 16, 0.6)",
-                backdropFilter: "blur(6px)",
-                color: "#fff",
-                width: "40px",
-                height: "40px",
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                border: "1px solid var(--border-color)",
-                cursor: "pointer",
-              }}
-            >
-              <ChevronRight size={22} />
-            </button>
-
-            {/* Dots Indicator */}
-            <div style={{ position: "absolute", bottom: "16px", right: "24px", zIndex: 20, display: "flex", gap: "0.4rem" }}>
-              {movies.map((m, idx) => (
-                <button
-                  key={m._id}
-                  onClick={() => setCurrentIndex(idx)}
-                  style={{
-                    width: idx === currentIndex ? "24px" : "8px",
-                    height: "8px",
-                    borderRadius: "var(--radius-full)",
-                    backgroundColor: idx === currentIndex ? "var(--primary)" : "rgba(255, 255, 255, 0.3)",
-                    transition: "all 0.3s ease",
-                    cursor: "pointer",
-                  }}
-                />
-              ))}
-            </div>
-          </>
+          <div style={{ position: "absolute", bottom: "18px", right: "24px", zIndex: 20, display: "flex", gap: "0.45rem", alignItems: "center" }}>
+            {movies.map((m, idx) => (
+              <button
+                key={m._id}
+                onClick={() => setCurrentIndex(idx)}
+                title={`Go to slide ${idx + 1}`}
+                style={{
+                  width: idx === currentIndex ? "24px" : "8px",
+                  height: "8px",
+                  borderRadius: "var(--radius-full)",
+                  backgroundColor: idx === currentIndex ? "var(--primary)" : "rgba(255, 255, 255, 0.4)",
+                  transition: "all 0.3s ease",
+                  cursor: "pointer",
+                  border: "none",
+                  outline: "none",
+                  padding: 0,
+                }}
+              />
+            ))}
+          </div>
         )}
       </div>
 
