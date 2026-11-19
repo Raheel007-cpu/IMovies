@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Star, Play, Ticket, Clock, Film, X } from "lucide-react";
+import { Star, Play, Ticket, ChevronLeft, ChevronRight, Clock, Film, X } from "lucide-react";
 
 const HeroBanner = ({ movies = [] }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -17,6 +17,14 @@ const HeroBanner = ({ movies = [] }) => {
   if (!movies || movies.length === 0) return null;
 
   const currentMovie = movies[currentIndex] || movies[0];
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev === 0 ? movies.length - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % movies.length);
+  };
 
   const getEmbedUrl = (url) => {
     if (!url) return null;
@@ -77,8 +85,8 @@ const HeroBanner = ({ movies = [] }) => {
           style={{
             position: "relative",
             zIndex: 10,
-            padding: "3.5rem 2.5rem",
-            maxWidth: "750px",
+            padding: "3.5rem 2.5rem 3.5rem 5.5rem",
+            maxWidth: "760px",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
@@ -179,6 +187,79 @@ const HeroBanner = ({ movies = [] }) => {
             )}
           </div>
         </div>
+
+        {/* Sleek Carousel Chevrons (No Circles / Pure Minimalist Arrows) */}
+        {movies.length > 1 && (
+          <>
+            <button
+              type="button"
+              onClick={handlePrev}
+              aria-label="Previous Movie"
+              style={{
+                position: "absolute",
+                left: "14px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                zIndex: 20,
+                background: "transparent",
+                border: "none",
+                outline: "none",
+                padding: "6px",
+                cursor: "pointer",
+                color: "rgba(255, 255, 255, 0.7)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                transition: "color 0.2s ease, transform 0.2s ease",
+                filter: "drop-shadow(0 2px 6px rgba(0, 0, 0, 0.9))",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = "#ffffff";
+                e.currentTarget.style.transform = "translateY(-50%) scale(1.18)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = "rgba(255, 255, 255, 0.7)";
+                e.currentTarget.style.transform = "translateY(-50%) scale(1)";
+              }}
+            >
+              <ChevronLeft size={36} strokeWidth={2.4} />
+            </button>
+
+            <button
+              type="button"
+              onClick={handleNext}
+              aria-label="Next Movie"
+              style={{
+                position: "absolute",
+                right: "14px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                zIndex: 20,
+                background: "transparent",
+                border: "none",
+                outline: "none",
+                padding: "6px",
+                cursor: "pointer",
+                color: "rgba(255, 255, 255, 0.7)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                transition: "color 0.2s ease, transform 0.2s ease",
+                filter: "drop-shadow(0 2px 6px rgba(0, 0, 0, 0.9))",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = "#ffffff";
+                e.currentTarget.style.transform = "translateY(-50%) scale(1.18)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = "rgba(255, 255, 255, 0.7)";
+                e.currentTarget.style.transform = "translateY(-50%) scale(1)";
+              }}
+            >
+              <ChevronRight size={36} strokeWidth={2.4} />
+            </button>
+          </>
+        )}
 
         {/* Slide Indicator Dots */}
         {movies.length > 1 && (
