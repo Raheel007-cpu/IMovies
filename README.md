@@ -11,7 +11,7 @@ Engineered specifically for single-project deployment on **Vercel** with serverl
 ## 🏗️ Architecture Overview
 
 - **Frontend:** React.js, Vite, React Router DOM, Axios, Context API, CSS3.
-- **Backend:** Node.js, Express.js, Serverless Functions (`api/index.js`), JWT, bcryptjs.
+- **Backend:** Node.js, Express.js, Serverless Functions (`server/index.js`), JWT, bcryptjs.
 - **Database:** MongoDB Atlas (Mongoose ODM) with warm connection pooling and compound unique indexing for seats.
 - **Hosting:** Vercel (Static frontend + Serverless backend in one repository).
 
@@ -21,8 +21,6 @@ Engineered specifically for single-project deployment on **Vercel** with serverl
 
 ```text
 imovies/
-├── api/
-│   └── index.js          # Vercel Serverless Function entry point
 ├── client/               # React + Vite frontend application
 │   ├── src/
 │   │   ├── components/   # Reusable UI components
@@ -35,10 +33,12 @@ imovies/
 ├── server/               # Express backend application
 │   ├── config/           # MongoDB Atlas connection manager (warm cache)
 │   ├── controllers/      # Route controllers
-│   ├── middleware/       # Error handling & JWT auth middleware
-│   ├── models/           # Mongoose schemas (Phase 2)
+│   ├── middleware/       # Security headers, rate limiting & auth middleware
+│   ├── models/           # Mongoose schemas
 │   ├── routes/           # REST API routes
+│   ├── services/         # IMDb service
 │   ├── app.js            # Express app configuration (no app.listen)
+│   ├── index.js          # Vercel Serverless Function entry point
 │   └── server.js         # Local development server entry point
 ├── package.json          # Root package scripts & backend dependencies
 ├── vercel.json           # Vercel routing & rewrite configuration

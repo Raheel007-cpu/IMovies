@@ -2,7 +2,7 @@
   "name": "imovies",
   "version": "1.0.0",
   "description": "IMovies - Full-Stack MERN Movie Ticket Booking Application",
-  "main": "api/index.js",
+  "main": "server/index.js",
   "scripts": {
     "server": "nodemon server/server.js",
     "client": "npm --prefix client run dev",
