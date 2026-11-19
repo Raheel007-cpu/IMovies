@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Film,
-  CheckCircle2,
-  AlertCircle,
-  RefreshCw,
-  Server,
-  Database,
-  Globe,
   ArrowRight,
-  TrendingUp,
+  RefreshCw,
+  Zap,
+  QrCode,
+  Star,
+  ShieldCheck,
+  Sparkles,
 } from "lucide-react";
 import API from "../services/api";
 import HeroBanner from "../components/movie/HeroBanner";
@@ -19,11 +18,6 @@ const Home = () => {
   const [featuredMovies, setFeaturedMovies] = useState([]);
   const [nowShowing, setNowShowing] = useState([]);
   const [moviesLoading, setMoviesLoading] = useState(true);
-
-  const [healthData, setHealthData] = useState(null);
-  const [pingData, setPingData] = useState(null);
-  const [seedData, setSeedData] = useState(null);
-  const [diagLoading, setDiagLoading] = useState(true);
 
   // Fetch movies for home page
   useEffect(() => {
@@ -46,28 +40,40 @@ const Home = () => {
     loadHomeData();
   }, []);
 
-  // System diagnostic check
-  const checkApiHealth = async () => {
-    setDiagLoading(true);
-    try {
-      const [healthRes, pingRes, seedRes] = await Promise.all([
-        API.get("/health"),
-        API.get("/health/ping"),
-        API.get("/seed/status").catch(() => ({ data: null })),
-      ]);
-      setHealthData(healthRes.data);
-      setPingData(pingRes.data);
-      setSeedData(seedRes.data);
-    } catch (err) {
-      console.error("Diagnostic error", err);
-    } finally {
-      setDiagLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    checkApiHealth();
-  }, []);
+  const features = [
+    {
+      icon: Zap,
+      color: "var(--primary)",
+      bgColor: "var(--primary-light)",
+      title: "Guaranteed Seat Hold",
+      description:
+        "Your selected seats are locked atomically for 10 minutes while you pay. Zero double-booking risk guaranteed.",
+    },
+    {
+      icon: QrCode,
+      color: "#f5c518",
+      bgColor: "rgba(245, 197, 24, 0.12)",
+      title: "Contactless QR Gate Pass",
+      description:
+        "No paper tickets or kiosk lines needed. Scan your dynamic digital QR ticket directly at the auditorium entrance.",
+    },
+    {
+      icon: Star,
+      color: "#f59e0b",
+      bgColor: "rgba(245, 158, 11, 0.12)",
+      title: "Live Verified IMDb Scores",
+      description:
+        "Powered by live IMDb sync. Check verified ratings, audience votes, runtimes, and official trailers before you book.",
+    },
+    {
+      icon: ShieldCheck,
+      color: "var(--success)",
+      bgColor: "var(--success-bg)",
+      title: "100% Secure Checkout",
+      description:
+        "Bank-grade encrypted payments via UPI, Credit/Debit cards, and NetBanking with instant booking verification.",
+    },
+  ];
 
   return (
     <div>
@@ -114,63 +120,96 @@ const Home = () => {
         )}
       </section>
 
-      {/* Diagnostics & Architecture Dashboard */}
-      <div className="glass-card" style={{ marginBottom: "2rem" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem", flexWrap: "wrap", gap: "1rem" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-            <Server size={22} color="var(--primary)" />
-            <div>
-              <h3 style={{ fontSize: "1.1rem", fontWeight: 700 }}>System & API Health Dashboard</h3>
-              <p style={{ fontSize: "0.8rem", color: "var(--text-secondary)" }}>
-                Real-time MERN stack diagnostics and Vercel serverless monitoring
-              </p>
-            </div>
-          </div>
-          <button
-            onClick={checkApiHealth}
-            disabled={diagLoading}
-            className="btn btn-secondary"
-            style={{ fontSize: "0.8rem", padding: "0.35rem 0.75rem" }}
+      {/* Why Book With IMovies Section */}
+      <section style={{ marginBottom: "3rem" }}>
+        <div style={{ textAlign: "center", maxWidth: "650px", margin: "0 auto 2.5rem" }}>
+          <div
+            className="badge badge-primary"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.35rem",
+              marginBottom: "0.5rem",
+              padding: "0.3rem 0.75rem",
+            }}
           >
-            <RefreshCw size={14} style={{ animation: diagLoading ? "spin 1s linear infinite" : "none" }} />
-            <span>{diagLoading ? "Checking..." : "Re-test"}</span>
-          </button>
+            <Sparkles size={13} />
+            <span>Premium Cinema Experience</span>
+          </div>
+          <h2 style={{ fontSize: "2rem", fontWeight: 800, letterSpacing: "-0.02em", marginBottom: "0.5rem" }}>
+            Why Book With IMovies?
+          </h2>
+          <p style={{ color: "var(--text-secondary)", fontSize: "0.95rem" }}>
+            Fast, transparent, and built for true moviegoers with real-time seat locks and digital QR ticketing.
+          </p>
         </div>
 
-        {healthData && (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1rem" }}>
-            <div style={{ padding: "1rem", backgroundColor: "var(--bg-secondary)", borderRadius: "var(--radius-sm)", border: "1px solid var(--border-color)" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.25rem" }}>
-                <CheckCircle2 size={16} color="var(--success)" />
-                <span style={{ fontWeight: 600, fontSize: "0.85rem" }}>Backend API</span>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+            gap: "1.5rem",
+          }}
+        >
+          {features.map((item, idx) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={idx}
+                className="glass-card"
+                style={{
+                  padding: "1.75rem",
+                  borderRadius: "var(--radius-lg)",
+                  display: "flex",
+                  flexDirection: "column",
+                  transition: "transform 0.25s ease, box-shadow 0.25s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-4px)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                }}
+              >
+                <div
+                  style={{
+                    width: "48px",
+                    height: "48px",
+                    borderRadius: "12px",
+                    backgroundColor: item.bgColor,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginBottom: "1.25rem",
+                  }}
+                >
+                  <Icon size={24} color={item.color} />
+                </div>
+                <h3
+                  style={{
+                    fontSize: "1.15rem",
+                    fontWeight: 700,
+                    marginBottom: "0.5rem",
+                    color: "var(--text-primary)",
+                  }}
+                >
+                  {item.title}
+                </h3>
+                <p
+                  style={{
+                    fontSize: "0.875rem",
+                    color: "var(--text-secondary)",
+                    lineHeight: 1.6,
+                    margin: 0,
+                  }}
+                >
+                  {item.description}
+                </p>
               </div>
-              <p style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--success)" }}>
-                Operational ({pingData?.message})
-              </p>
-            </div>
-
-            <div style={{ padding: "1rem", backgroundColor: "var(--bg-secondary)", borderRadius: "var(--radius-sm)", border: "1px solid var(--border-color)" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.25rem" }}>
-                <Database size={16} color="var(--accent)" />
-                <span style={{ fontWeight: 600, fontSize: "0.85rem" }}>MongoDB Atlas</span>
-              </div>
-              <p style={{ fontSize: "0.95rem", fontWeight: 700, color: healthData.database.connected ? "var(--success)" : "var(--accent)" }}>
-                {healthData.database.status} ({seedData?.counts?.movies || 0} Movies, {seedData?.counts?.shows || 0} Shows)
-              </p>
-            </div>
-
-            <div style={{ padding: "1rem", backgroundColor: "var(--bg-secondary)", borderRadius: "var(--radius-sm)", border: "1px solid var(--border-color)" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.25rem" }}>
-                <Globe size={16} color="#60a5fa" />
-                <span style={{ fontWeight: 600, fontSize: "0.85rem" }}>Deployment State</span>
-              </div>
-              <p style={{ fontSize: "0.95rem", fontWeight: 700, color: "#60a5fa" }}>
-                Vercel Functions Ready
-              </p>
-            </div>
-          </div>
-        )}
-      </div>
+            );
+          })}
+        </div>
+      </section>
 
       <style>{`
         @keyframes spin {
