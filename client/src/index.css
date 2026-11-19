@@ -106,8 +106,18 @@
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
-[data-theme="light"] .hero-banner span:not(.badge) {
+[data-theme="light"] .hero-banner span:not(.badge):not(.btn):not(.btn *) {
   color: rgba(255, 255, 255, 0.85);
+}
+
+[data-theme="light"] .hero-banner .btn-secondary,
+[data-theme="light"] .hero-banner .btn-secondary span {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .hero-banner .btn-secondary svg {
+  color: #0f172a !important;
+  fill: #0f172a !important;
 }
 
 [data-theme="light"] .glass-card {
