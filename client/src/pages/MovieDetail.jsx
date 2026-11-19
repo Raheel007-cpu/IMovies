@@ -146,7 +146,7 @@ const MovieDetail = () => {
             backgroundImage: `url(${movie.bannerUrl || movie.posterUrl})`,
             backgroundSize: "cover",
             backgroundPosition: "center 20%",
-            filter: "blur(20px) brightness(0.2)",
+            filter: "blur(20px) brightness(0.5)",
             transform: "scale(1.1)",
           }}
         />
@@ -220,6 +220,7 @@ const MovieDetail = () => {
             <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.25rem", flexWrap: "wrap" }}>
               {/* Official IMDb Rating Badge */}
               <div
+                className="imdb-badge"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",

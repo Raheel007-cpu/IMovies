@@ -63,7 +63,7 @@ const HeroBanner = ({ movies = [] }) => {
             backgroundImage: `url(${currentMovie.bannerUrl || currentMovie.posterUrl})`,
             backgroundSize: "cover",
             backgroundPosition: "center 25%",
-            filter: "brightness(0.35)",
+            filter: "brightness(0.65) saturate(1.1)",
             transition: "background-image 0.6s ease-in-out",
           }}
         />
@@ -76,7 +76,7 @@ const HeroBanner = ({ movies = [] }) => {
             left: 0,
             width: "100%",
             height: "100%",
-            background: "linear-gradient(90deg, rgba(10, 12, 16, 0.95) 0%, rgba(10, 12, 16, 0.65) 50%, rgba(10, 12, 16, 0.85) 100%)",
+            background: "linear-gradient(90deg, rgba(10, 12, 16, 0.88) 0%, rgba(10, 12, 16, 0.45) 45%, rgba(10, 12, 16, 0.15) 100%)",
           }}
         />
 
@@ -97,6 +97,7 @@ const HeroBanner = ({ movies = [] }) => {
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.85rem", flexWrap: "wrap" }}>
             <span className="badge badge-primary">Featured Spotlight</span>
             <span
+              className="imdb-badge"
               style={{
                 display: "inline-flex",
                 alignItems: "center",

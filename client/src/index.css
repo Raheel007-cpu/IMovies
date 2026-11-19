@@ -106,8 +106,22 @@
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
-[data-theme="light"] .hero-banner span:not(.badge):not(.btn):not(.btn *) {
+[data-theme="light"] .hero-banner span:not(.badge):not(.btn):not(.btn *):not(.imdb-badge):not(.imdb-badge *) {
   color: rgba(255, 255, 255, 0.85);
+}
+
+/* Signature IMDb Badge - always sharp black typography on signature gold yellow */
+.imdb-badge,
+.imdb-badge *,
+[data-theme="light"] .imdb-badge,
+[data-theme="light"] .imdb-badge * {
+  color: #000000 !important;
+}
+
+.imdb-badge svg,
+[data-theme="light"] .imdb-badge svg {
+  fill: #000000 !important;
+  color: #000000 !important;
 }
 
 [data-theme="light"] .hero-banner .btn-secondary,

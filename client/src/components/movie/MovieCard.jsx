@@ -44,6 +44,7 @@ const MovieCard = ({ movie }) => {
             </span>
           ) : (
             <span
+              className="imdb-badge"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
