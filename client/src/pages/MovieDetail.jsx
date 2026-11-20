@@ -33,12 +33,12 @@ const MovieDetail = () => {
       if (res.data?.success) {
         setLiveImdb(res.data);
         if (sync) {
-          setSyncNotice("Live IMDb rating updated & synced!");
+          setSyncNotice("Live IMDB rating updated & synced!");
           setTimeout(() => setSyncNotice(null), 3500);
         }
       }
     } catch (err) {
-      console.error("Live IMDb rating fetch error", err);
+      console.error("Live IMDB rating fetch error", err);
     } finally {
       setSyncingImdb(false);
     }
@@ -51,7 +51,7 @@ const MovieDetail = () => {
       try {
         const response = await API.get(`/movies/${id}`);
         setMovie(response.data.data);
-        // Automatically fetch live IMDb rating if not yet loaded
+        // Automatically fetch live IMDB rating if not yet loaded
         fetchLiveRating(false);
       } catch (err) {
         setError(err.message || "Failed to load movie details");
@@ -218,7 +218,7 @@ const MovieDetail = () => {
 
             {/* Ratings & Meta Section */}
             <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.25rem", flexWrap: "wrap" }}>
-              {/* Official IMDb Rating Badge */}
+              {/* Official IMDB Rating Badge */}
               <div
                 className="imdb-badge"
                 style={{
@@ -234,7 +234,7 @@ const MovieDetail = () => {
                   boxShadow: "0 2px 10px rgba(245, 197, 24, 0.35)",
                 }}
               >
-                <span style={{ letterSpacing: "-0.03em" }}>IMDb</span>
+                <span style={{ letterSpacing: "-0.03em" }}>IMDB</span>
                 <Star size={16} fill="#000" color="#000" />
                 <span>
                   {(liveImdb?.imdbRating || movie.imdbRating || movie.rating || 0).toFixed(1)}
@@ -242,7 +242,7 @@ const MovieDetail = () => {
                 </span>
               </div>
 
-              {/* Real-time IMDb Votes */}
+              {/* Real-time IMDB Votes */}
               {(liveImdb?.imdbVotes || movie.imdbVotes || movie.votesCount > 0) && (
                 <span style={{ fontSize: "0.85rem", color: "var(--text-muted)", fontWeight: 500 }}>
                   ({liveImdb?.imdbVotes || movie.imdbVotes || `${movie.votesCount?.toLocaleString()} votes`})
@@ -267,13 +267,13 @@ const MovieDetail = () => {
                   cursor: "pointer",
                   transition: "all 0.2s",
                 }}
-                title="Fetch live real-time rating directly from IMDb"
+                title="Fetch live real-time rating directly from IMDB"
               >
                 <RefreshCw size={13} className={syncingImdb ? "spin" : ""} />
-                <span>{syncingImdb ? "Updating..." : "Live IMDb Sync"}</span>
+                <span>{syncingImdb ? "Updating..." : "Live IMDB Sync"}</span>
               </button>
 
-              {/* Link to IMDb Title Page if ID exists */}
+              {/* Link to IMDB Title Page if ID exists */}
               {(liveImdb?.imdbId || movie.imdbId) && (
                 <a
                   href={`https://www.imdb.com/title/${liveImdb?.imdbId || movie.imdbId}`}
@@ -287,9 +287,9 @@ const MovieDetail = () => {
                     fontSize: "0.8rem",
                     fontWeight: 600,
                   }}
-                  title="View on IMDb"
+                  title="View on IMDB"
                 >
-                  <span>IMDb Page</span>
+                  <span>IMDB Page</span>
                   <ExternalLink size={12} />
                 </a>
               )}

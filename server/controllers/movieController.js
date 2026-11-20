@@ -291,7 +291,7 @@ const deleteMovie = async (req, res) => {
 };
 
 /**
- * @desc    Look up movie info and live rating directly from IMDb (OMDb)
+ * @desc    Look up movie info and live rating directly from IMDB (OMDb)
  * @route   GET /api/movies/imdb/lookup
  * @access  Public / Admin
  */
@@ -302,7 +302,7 @@ const lookupImdb = async (req, res) => {
     if (!title && !imdbId) {
       return res.status(400).json({
         success: false,
-        message: "Please provide either a movie title or IMDb ID",
+        message: "Please provide either a movie title or IMDB ID",
       });
     }
 
@@ -311,7 +311,7 @@ const lookupImdb = async (req, res) => {
     if (!data.success) {
       return res.status(404).json({
         success: false,
-        message: data.message || "Movie not found on IMDb",
+        message: data.message || "Movie not found on IMDB",
       });
     }
 
@@ -322,13 +322,13 @@ const lookupImdb = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: error.message || "Failed to query IMDb API",
+      message: error.message || "Failed to query IMDB API",
     });
   }
 };
 
 /**
- * @desc    Get real-time live IMDb rating for a specific movie (with optional sync)
+ * @desc    Get real-time live IMDB rating for a specific movie (with optional sync)
  * @route   GET /api/movies/:id/live-rating
  * @access  Public
  */
@@ -343,7 +343,7 @@ const getLiveMovieRating = async (req, res) => {
       });
     }
 
-    // Query live IMDb API using stored imdbId or movie title
+    // Query live IMDB API using stored imdbId or movie title
     const imdbData = await fetchImdbData({
       title: movie.title,
       imdbId: movie.imdbId,
@@ -373,7 +373,7 @@ const getLiveMovieRating = async (req, res) => {
       });
     }
 
-    // Fallback to cached movie rating if IMDb live query failed
+    // Fallback to cached movie rating if IMDB live query failed
     res.status(200).json({
       success: true,
       live: false,
@@ -392,7 +392,7 @@ const getLiveMovieRating = async (req, res) => {
 };
 
 /**
- * @desc    Force sync a movie's rating and metadata with IMDb (Admin only)
+ * @desc    Force sync a movie's rating and metadata with IMDB (Admin only)
  * @route   POST /api/movies/:id/sync-imdb
  * @access  Admin Protected
  */
@@ -415,11 +415,11 @@ const syncMovieImdb = async (req, res) => {
     if (!imdbData.success) {
       return res.status(400).json({
         success: false,
-        message: imdbData.message || "Could not find matching IMDb record",
+        message: imdbData.message || "Could not find matching IMDB record",
       });
     }
 
-    // Update movie fields from real-time IMDb
+    // Update movie fields from real-time IMDB
     if (imdbData.imdbRating) {
       movie.imdbRating = imdbData.imdbRating;
       movie.rating = imdbData.imdbRating;
@@ -433,14 +433,14 @@ const syncMovieImdb = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: `Successfully synchronized ${movie.title} with IMDb!`,
+      message: `Successfully synchronized ${movie.title} with IMDB!`,
       data: movie,
       imdb: imdbData,
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: error.message || "Failed to synchronize with IMDb",
+      message: error.message || "Failed to synchronize with IMDB",
     });
   }
 };

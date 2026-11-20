@@ -58,7 +58,7 @@ const MovieCard = ({ movie }) => {
                 boxShadow: "0 2px 6px rgba(0,0,0,0.5)",
               }}
             >
-              <span style={{ fontSize: "0.72rem", letterSpacing: "-0.02em" }}>IMDb</span>
+              <span style={{ fontSize: "0.72rem", letterSpacing: "-0.02em" }}>IMDB</span>
               <Star size={12} fill="#000" color="#000" />
               <span>{(movie.imdbRating || movie.rating || 0).toFixed(1)}</span>
             </span>

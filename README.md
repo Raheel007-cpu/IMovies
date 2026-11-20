@@ -36,7 +36,7 @@ imovies/
 │   ├── middleware/       # Security headers, rate limiting & auth middleware
 │   ├── models/           # Mongoose schemas
 │   ├── routes/           # REST API routes
-│   ├── services/         # IMDb service
+│   ├── services/         # IMDB service
 │   ├── app.js            # Express app configuration (no app.listen)
 │   ├── index.js          # Vercel Serverless Function entry point
 │   └── server.js         # Local development server entry point

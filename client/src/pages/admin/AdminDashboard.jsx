@@ -58,7 +58,7 @@ const AdminDashboard = () => {
     imdbVotes: "",
   });
 
-  // Real-Time IMDb search state
+  // Real-Time IMDB search state
   const [imdbSearchQuery, setImdbSearchQuery] = useState("");
   const [isFetchingImdb, setIsFetchingImdb] = useState(false);
   const [syncingMovieId, setSyncingMovieId] = useState(null);
@@ -141,7 +141,7 @@ const AdminDashboard = () => {
     }
   };
 
-  // Real-Time IMDb Auto-Fetch Handler
+  // Real-Time IMDB Auto-Fetch Handler
   const handleImdbLookup = async () => {
     if (!imdbSearchQuery.trim()) return;
     setIsFetchingImdb(true);
@@ -171,20 +171,20 @@ const AdminDashboard = () => {
         }));
         setNotification({
           type: "success",
-          text: `⚡ Found "${d.title}" on IMDb: ⭐ ${d.imdbRating}/10 (${d.imdbVotes} votes)! Form auto-filled.`,
+          text: `⚡ Found "${d.title}" on IMDB: ⭐ ${d.imdbRating}/10 (${d.imdbVotes} votes)! Form auto-filled.`,
         });
       }
     } catch (err) {
       setNotification({
         type: "error",
-        text: err.message || "Movie not found on IMDb. Try another title or IMDb ID.",
+        text: err.message || "Movie not found on IMDB. Try another title or IMDB ID.",
       });
     } finally {
       setIsFetchingImdb(false);
     }
   };
 
-  // Sync Existing Movie With IMDb Real-Time
+  // Sync Existing Movie With IMDB Real-Time
   const handleSyncMovieImdb = async (movieId, movieTitle) => {
     setSyncingMovieId(movieId);
     try {
@@ -192,7 +192,7 @@ const AdminDashboard = () => {
       if (res.data?.success) {
         setNotification({
           type: "success",
-          text: `✓ Synced "${movieTitle}" with IMDb: ⭐ ${res.data.data.imdbRating}/10 (${res.data.data.imdbVotes || "N/A"})`,
+          text: `✓ Synced "${movieTitle}" with IMDB: ⭐ ${res.data.data.imdbRating}/10 (${res.data.data.imdbVotes || "N/A"})`,
         });
         setMoviesList((prev) =>
           prev.map((m) => (m._id === movieId ? res.data.data : m))
@@ -201,7 +201,7 @@ const AdminDashboard = () => {
     } catch (err) {
       setNotification({
         type: "error",
-        text: err.message || `Failed to sync "${movieTitle}" with IMDb`,
+        text: err.message || `Failed to sync "${movieTitle}" with IMDB`,
       });
     } finally {
       setSyncingMovieId(null);
@@ -469,7 +469,7 @@ const AdminDashboard = () => {
                   </h4>
                   <p style={{ color: "var(--text-muted)", fontSize: "0.75rem" }}>{m.duration} mins • {m.genre?.slice(0, 2).join(", ")}</p>
 
-                  {/* Real-time IMDb rating badge in Admin Table */}
+                  {/* Real-time IMDB rating badge in Admin Table */}
                   <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginTop: "0.3rem", flexWrap: "wrap" }}>
                     <span
                       style={{
@@ -483,9 +483,9 @@ const AdminDashboard = () => {
                         fontSize: "0.72rem",
                         fontWeight: 800,
                       }}
-                      title="IMDb Rating"
+                      title="IMDB Rating"
                     >
-                      <span>IMDb</span>
+                      <span>IMDB</span>
                       <Star size={11} fill="#000" color="#000" />
                       <span>{(m.imdbRating || m.rating || 0).toFixed(1)}</span>
                     </span>
@@ -521,7 +521,7 @@ const AdminDashboard = () => {
                     onClick={() => handleSyncMovieImdb(m._id, m.title)}
                     disabled={syncingMovieId === m._id}
                     style={{ background: "none", color: "var(--accent)", padding: "0.4rem", cursor: "pointer", border: "none" }}
-                    title="Sync Live Rating from IMDb"
+                    title="Sync Live Rating from IMDB"
                   >
                     <RefreshCw size={16} className={syncingMovieId === m._id ? "spin" : ""} />
                   </button>
@@ -548,7 +548,7 @@ const AdminDashboard = () => {
                   </button>
                 </div>
 
-                {/* Real-Time IMDb Auto-Fill Search Toolbar */}
+                {/* Real-Time IMDB Auto-Fill Search Toolbar */}
                 <div
                   style={{
                     padding: "1rem",
@@ -561,9 +561,9 @@ const AdminDashboard = () => {
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.5rem" }}>
                     <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontWeight: 700, color: "#fff", fontSize: "0.9rem" }}>
                       <Sparkles size={15} color="var(--text-muted)" />
-                      <span>Real-Time IMDb Auto-Fetch</span>
+                      <span>Real-Time IMDB Auto-Fetch</span>
                     </span>
-                    <span style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>Title or IMDb ID (e.g. tt15398776)</span>
+                    <span style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>Title or IMDB ID (e.g. tt15398776)</span>
                   </div>
                   <div style={{ display: "flex", gap: "0.5rem" }}>
                     <input
@@ -607,7 +607,7 @@ const AdminDashboard = () => {
                       }}
                     >
                       {isFetchingImdb ? <RefreshCw size={14} className="spin" /> : <Search size={14} />}
-                      <span>{isFetchingImdb ? "Fetching..." : "Fetch IMDb"}</span>
+                      <span>{isFetchingImdb ? "Fetching..." : "Fetch IMDB"}</span>
                     </button>
                   </div>
                 </div>
@@ -677,7 +677,7 @@ const AdminDashboard = () => {
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
                     <div>
                       <label style={{ display: "block", fontSize: "0.85rem", color: "var(--accent)", marginBottom: "0.3rem", fontWeight: 600 }}>
-                        ⭐ IMDb Rating (0 - 10)
+                        ⭐ IMDB Rating (0 - 10)
                       </label>
                       <input
                         type="number"
@@ -692,7 +692,7 @@ const AdminDashboard = () => {
                     </div>
                     <div>
                       <label style={{ display: "block", fontSize: "0.85rem", color: "var(--text-secondary)", marginBottom: "0.3rem" }}>
-                        IMDb ID (Optional)
+                        IMDB ID (Optional)
                       </label>
                       <input
                         type="text"

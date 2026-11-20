@@ -1,5 +1,5 @@
 /**
- * IMDb Integration Service via OMDb API
+ * IMDB Integration Service via OMDb API
  * Fetches real-time ratings, votes, awards, and movie metadata
  */
 
@@ -19,15 +19,15 @@ const mapCertificate = (rated) => {
 };
 
 /**
- * Fetch real-time IMDb data by movie title or IMDb ID (ttXXXXXXX)
+ * Fetch real-time IMDB data by movie title or IMDB ID (ttXXXXXXX)
  * @param {Object} options - { title, imdbId, year }
- * @returns {Promise<Object>} Normalized IMDb movie details and ratings
+ * @returns {Promise<Object>} Normalized IMDB movie details and ratings
  */
 const fetchImdbData = async ({ title, imdbId, year } = {}) => {
   const apiKey = getApiKey();
 
   if (!title && !imdbId) {
-    throw new Error("Either movie title or IMDb ID is required for IMDb lookup");
+    throw new Error("Either movie title or IMDB ID is required for IMDB lookup");
   }
 
   // Construct query parameters
@@ -54,7 +54,7 @@ const fetchImdbData = async ({ title, imdbId, year } = {}) => {
     });
 
     if (!response.ok) {
-      throw new Error(`IMDb API request failed with status: ${response.status}`);
+      throw new Error(`IMDB API request failed with status: ${response.status}`);
     }
 
     const data = await response.json();
@@ -62,7 +62,7 @@ const fetchImdbData = async ({ title, imdbId, year } = {}) => {
     if (data.Response === "False") {
       return {
         success: false,
-        message: data.Error || "Movie not found on IMDb",
+        message: data.Error || "Movie not found on IMDB",
       };
     }
 
@@ -116,14 +116,14 @@ const fetchImdbData = async ({ title, imdbId, year } = {}) => {
       votesCount: numericVotes,
       boxOffice: data.BoxOffice !== "N/A" ? data.BoxOffice : null,
       awards: data.Awards !== "N/A" ? data.Awards : null,
-      source: "IMDb / OMDb API",
+      source: "IMDB / OMDb API",
       timestamp: new Date().toISOString(),
     };
   } catch (error) {
-    console.error("IMDb API fetch error:", error.message);
+    console.error("IMDB API fetch error:", error.message);
     return {
       success: false,
-      message: error.message || "Failed to reach IMDb API",
+      message: error.message || "Failed to reach IMDB API",
     };
   }
 };

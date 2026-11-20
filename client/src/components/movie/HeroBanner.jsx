@@ -111,7 +111,7 @@ const HeroBanner = ({ movies = [] }) => {
                 boxShadow: "0 2px 6px rgba(0,0,0,0.5)",
               }}
             >
-              <span>IMDb</span>
+              <span>IMDB</span>
               <Star size={12} fill="#000" color="#000" />
               <span>{(currentMovie.imdbRating || currentMovie.rating || 0).toFixed(1)}</span>
             </span>

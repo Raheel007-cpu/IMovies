@@ -61,9 +61,9 @@ const Home = () => {
       icon: Star,
       color: "#f59e0b",
       bgColor: "rgba(245, 158, 11, 0.12)",
-      title: "Live Verified IMDb Scores",
+      title: "Live Verified IMDB Scores",
       description:
-        "Powered by live IMDb sync. Check verified ratings, audience votes, runtimes, and official trailers before you book.",
+        "Powered by live IMDB sync. Check verified ratings, audience votes, runtimes, and official trailers before you book.",
     },
     {
       icon: ShieldCheck,
