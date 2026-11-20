@@ -1,9 +1,15 @@
 import axios from "axios";
 
 // In Vercel serverless / same-domain deployments, '/api' is used directly.
-// If VITE_API_URL is set in environment, use that as baseURL.
+// If VITE_API_URL is set in environment, ensure it properly includes the '/api' prefix.
+let apiBaseUrl = (import.meta.env.VITE_API_URL || "/api").trim();
+
+if (apiBaseUrl !== "/api" && !apiBaseUrl.endsWith("/api") && !apiBaseUrl.endsWith("/api/")) {
+  apiBaseUrl = apiBaseUrl.replace(/\/+$/, "") + "/api";
+}
+
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "/api",
+  baseURL: apiBaseUrl,
   headers: {
     "Content-Type": "application/json",
   },
