@@ -9,6 +9,7 @@ import {
   Users,
   Calendar,
   Plus,
+  Pencil,
   Trash2,
   RefreshCw,
   AlertCircle,
@@ -40,8 +41,7 @@ const AdminDashboard = () => {
   const [allBookings, setAllBookings] = useState([]);
 
   // Form states
-  const [showAddMovieModal, setShowAddMovieModal] = useState(false);
-  const [newMovie, setNewMovie] = useState({
+  const initialMovieState = {
     title: "",
     description: "",
     genre: "Action, Sci-Fi",
@@ -56,7 +56,11 @@ const AdminDashboard = () => {
     imdbId: "",
     imdbRating: 0,
     imdbVotes: "",
-  });
+  };
+
+  const [showAddMovieModal, setShowAddMovieModal] = useState(false);
+  const [editingMovieId, setEditingMovieId] = useState(null);
+  const [newMovie, setNewMovie] = useState(initialMovieState);
 
   // Real-Time IMDB search state
   const [imdbSearchQuery, setImdbSearchQuery] = useState("");
@@ -208,16 +212,57 @@ const AdminDashboard = () => {
     }
   };
 
-  // Add Movie Handler
-  const handleAddMovie = async (e) => {
+  // Open Modal in Add or Edit mode
+  const openAddMovieModal = () => {
+    setEditingMovieId(null);
+    setNewMovie(initialMovieState);
+    setImdbSearchQuery("");
+    setShowAddMovieModal(true);
+  };
+
+  const openEditMovieModal = (movie) => {
+    setEditingMovieId(movie._id);
+    setNewMovie({
+      title: movie.title || "",
+      description: movie.description || "",
+      genre: Array.isArray(movie.genre) ? movie.genre.join(", ") : movie.genre || "",
+      language: Array.isArray(movie.language) ? movie.language.join(", ") : movie.language || "",
+      duration: movie.duration || 150,
+      releaseDate: movie.releaseDate
+        ? new Date(movie.releaseDate).toISOString().split("T")[0]
+        : new Date().toISOString().split("T")[0],
+      posterUrl: movie.posterUrl || "",
+      bannerUrl: movie.bannerUrl || "",
+      trailerUrl: movie.trailerUrl || "",
+      certificate: movie.certificate || "UA",
+      status: movie.status || "NOW_SHOWING",
+      imdbId: movie.imdbId || "",
+      imdbRating: movie.imdbRating ?? movie.rating ?? 0,
+      imdbVotes: movie.imdbVotes || "",
+    });
+    setImdbSearchQuery(movie.imdbId || movie.title || "");
+    setShowAddMovieModal(true);
+  };
+
+  // Create or Update Movie Handler
+  const handleSaveMovie = async (e) => {
     e.preventDefault();
     try {
-      await API.post("/movies", newMovie);
-      setNotification({ type: "success", text: "Movie added to catalog successfully!" });
+      if (editingMovieId) {
+        await API.put(`/movies/${editingMovieId}`, newMovie);
+        setNotification({ type: "success", text: "Movie updated successfully!" });
+      } else {
+        await API.post("/movies", newMovie);
+        setNotification({ type: "success", text: "Movie added to catalog successfully!" });
+      }
       setShowAddMovieModal(false);
+      setEditingMovieId(null);
       fetchStats();
     } catch (err) {
-      setNotification({ type: "error", text: err.message || "Failed to create movie" });
+      setNotification({
+        type: "error",
+        text: err.message || (editingMovieId ? "Failed to update movie" : "Failed to create movie"),
+      });
     }
   };
 
@@ -450,7 +495,7 @@ const AdminDashboard = () => {
         <div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
             <h2 style={{ fontSize: "1.25rem", fontWeight: 800 }}>Manage Movies Catalog</h2>
-            <button onClick={() => setShowAddMovieModal(true)} className="btn btn-primary" style={{ fontSize: "0.85rem" }}>
+            <button onClick={openAddMovieModal} className="btn btn-primary" style={{ fontSize: "0.85rem" }}>
               <Plus size={16} />
               <span>Add New Movie</span>
             </button>
@@ -518,6 +563,13 @@ const AdminDashboard = () => {
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
                   <button
+                    onClick={() => openEditMovieModal(m)}
+                    style={{ background: "none", color: "#60a5fa", padding: "0.4rem", cursor: "pointer", border: "none" }}
+                    title="Edit Movie"
+                  >
+                    <Pencil size={16} />
+                  </button>
+                  <button
                     onClick={() => handleSyncMovieImdb(m._id, m.title)}
                     disabled={syncingMovieId === m._id}
                     style={{ background: "none", color: "var(--accent)", padding: "0.4rem", cursor: "pointer", border: "none" }}
@@ -542,8 +594,16 @@ const AdminDashboard = () => {
             <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "rgba(0,0,0,0.8)", zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem" }}>
               <div className="glass-card" style={{ maxWidth: "580px", width: "100%", maxHeight: "90vh", overflowY: "auto", padding: "2rem" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem" }}>
-                  <h3 style={{ fontSize: "1.3rem", fontWeight: 800 }}>Add New Movie</h3>
-                  <button onClick={() => setShowAddMovieModal(false)} style={{ background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer" }}>
+                  <h3 style={{ fontSize: "1.3rem", fontWeight: 800 }}>
+                    {editingMovieId ? "Edit Movie" : "Add New Movie"}
+                  </h3>
+                  <button
+                    onClick={() => {
+                      setShowAddMovieModal(false);
+                      setEditingMovieId(null);
+                    }}
+                    style={{ background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer" }}
+                  >
                     <X size={20} />
                   </button>
                 </div>
@@ -612,7 +672,7 @@ const AdminDashboard = () => {
                   </div>
                 </div>
 
-                <form onSubmit={handleAddMovie}>
+                <form onSubmit={handleSaveMovie}>
                   <div style={{ marginBottom: "1rem" }}>
                     <label style={{ display: "block", fontSize: "0.85rem", color: "var(--text-secondary)", marginBottom: "0.3rem" }}>Title</label>
                     <input type="text" value={newMovie.title} onChange={(e) => setNewMovie({ ...newMovie, title: e.target.value })} required style={{ width: "100%", padding: "0.6rem", backgroundColor: "var(--bg-secondary)", border: "1px solid var(--border-color)", borderRadius: "6px", color: "#fff" }} />
@@ -729,13 +789,25 @@ const AdminDashboard = () => {
                       >
                         <option value="NOW_SHOWING">Now Showing</option>
                         <option value="UPCOMING">Upcoming / Coming Soon</option>
+                        <option value="ARCHIVED">Archived</option>
                       </select>
                     </div>
                   </div>
 
                   <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.75rem" }}>
-                    <button type="button" onClick={() => setShowAddMovieModal(false)} className="btn btn-secondary">Cancel</button>
-                    <button type="submit" className="btn btn-primary">Create Movie</button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowAddMovieModal(false);
+                        setEditingMovieId(null);
+                      }}
+                      className="btn btn-secondary"
+                    >
+                      Cancel
+                    </button>
+                    <button type="submit" className="btn btn-primary">
+                      {editingMovieId ? "Save Changes" : "Create Movie"}
+                    </button>
                   </div>
                 </form>
               </div>

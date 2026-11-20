@@ -236,10 +236,22 @@ const updateMovie = async (req, res) => {
     // Process genre & language arrays if provided as string
     const updates = { ...req.body };
     if (typeof updates.genre === "string") {
-      updates.genre = updates.genre.split(",").map((g) => g.trim());
+      updates.genre = updates.genre.split(",").map((g) => g.trim()).filter(Boolean);
     }
     if (typeof updates.language === "string") {
-      updates.language = updates.language.split(",").map((l) => l.trim());
+      updates.language = updates.language.split(",").map((l) => l.trim()).filter(Boolean);
+    }
+    if (updates.duration !== undefined) {
+      updates.duration = Number(updates.duration);
+    }
+    if (updates.imdbRating !== undefined && updates.imdbRating !== "") {
+      updates.imdbRating = Number(updates.imdbRating);
+      if (updates.rating === undefined) {
+        updates.rating = updates.imdbRating;
+      }
+    }
+    if (updates.bannerUrl === "") {
+      updates.bannerUrl = updates.posterUrl || movie.posterUrl;
     }
 
     movie = await Movie.findByIdAndUpdate(req.params.id, updates, {
