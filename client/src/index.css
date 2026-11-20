@@ -265,6 +265,17 @@ button {
   border: 1px solid rgba(229, 9, 20, 0.3);
 }
 
+.admin-panel-link {
+  transition: all 0.2s ease;
+}
+
+.admin-panel-link:hover,
+[data-theme="light"] .admin-panel-link:hover {
+  background-color: var(--primary) !important;
+  color: #ffffff !important;
+  border-color: var(--primary) !important;
+}
+
 /* Glass Card */
 .glass-card {
   background: var(--bg-card);

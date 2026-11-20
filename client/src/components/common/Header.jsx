@@ -144,7 +144,7 @@ const Header = () => {
                 {isAdmin && (
                   <Link
                     to="/admin"
-                    className="badge badge-primary"
+                    className="badge badge-primary admin-panel-link"
                     style={{ display: "flex", alignItems: "center", gap: "0.25rem", padding: "0.4rem 0.75rem", textDecoration: "none" }}
                     title="Open Admin Console"
                   >
